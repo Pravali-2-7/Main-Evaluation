@@ -54,7 +54,7 @@
             height: 120px;
             object-fit: cover;
             margin-bottom:10px;
-            border-radius: :4px;
+            border-radius:4px;
         }
         .main-content{
             flex: 1;
@@ -138,7 +138,7 @@
         const CategoryFilter=document.getElementById('categoryFilter');
         const availabityFilter=document.getElementById("availabilityFilter");
         const clearFilter=document.getElementById("clearFilter");
-        funtion renederFleetCards(data){
+        function renederFleetCards(data){
             fleetcard.innerHTML= '';
             dat.forEach((fleet,index) => {
                 const card=document.createElement('div');
@@ -190,19 +190,30 @@
             availabityInput.value='';
             
         });
-        funtion applyFilter(){
+        function applyFilter(){
             let filteredData=fleetdata;
             const selectCategory=CategoryFilter.value;
             const selectAvailability=availabityFilter.value;
 
-            if(selectCategor !='All'){
+            if(selectCategory !='All'){
                 filteredData=filteredData.filter(f=>f.category==selectCategory);
             }
             
+             if(selectAvailability !='All'){
+                filteredData=filteredData.filter(f=>f.availabiity==selectAvailability);
+            }
+
+            renederFleetCards(filteredData);
         }
 
+        CategoryFilter.addEventListener('change', applyFilter);
+        availabityFilter.addEventListener('change', applyFilter);
 
-
+        clearFilterBtn.addEventListener('click',()=>{
+            CategoryFilter.value="All";
+            availabityFilter.value="All";
+            renederFleetCards(fleetData);
+        });
        </script>
 
     </body>

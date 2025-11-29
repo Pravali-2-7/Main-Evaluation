@@ -44,11 +44,48 @@
             padding: 8px;
         }
         .card{
-            
+            background: white;
+            padding:15px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px gray;
         }
+        .card img{
+            width:250px;
+            height: 120px;
+            object-fit: cover;
+            margin-bottom:10px;
+            border-radius: :4px;
+        }
+        .main-content{
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap:15px;
+        }
+        .card button{
+            background: white;
+            padding: 15px;
+            border-radius: 4x;
+            border:none;
+           cursor:pointer;
+        }
+        .update-btn{
+            background: gold;
+            color:white;
+        }
+        .availabiity{
+            background:pink;
+            color:white;
+        }
+        .delete-btn{
+            background: red;
+            color:white;
+        }
+
     </style>
     </head>
     <body>
+        <nav>
         <label>
             Category:
             <select id="CategoryFilter">
@@ -59,6 +96,115 @@
                 <option value="Bus">Bus</option>
             </select>
         </label>
+        <label>Availablity:
+            <slelect id="availabityFilter">
+                <option value="ALL">ALL</option>
+                <option value="Available">Available</option>
+                <option value="UnAvailable">UnAvailable</option>
+            </slelect>
+        </label>
+        <button id="clearFilter">Clear Filter</button>
+       </nav>
+       <div class="container">
+        <div class="sidebar">
+        <h3> Add Fleet</h3>
+        <input type="text" id="regNo" placeholder="Reg No of Vehicle" required>
+        <select id="category">
+            <option value="">Select Category</option>
+            <option value="Auto">Auto</option>
+            <option value="car">car</option>
+            <option value="Truck">Truck</option>
+            <option value="Bus">Bus</option>
+        </select>
+        <input type="text" id="driverName" placeholder="DriverName" required>
+        <select id="availablity">
+            <option value="">Select Availablity</option>
+            <option value="Available">Available</option>
+            <option value="UnAvailable">UnAvailable</option>
+        </select>
+        <button id="addFleetBtn">Add Fleet</button>
+       </div>
+       <div class="main-content" id="fleetcards"></div>
+       </div>
+       <script>
+        const fleetData=[];
+        const regNoInput=document.getElementById("regNo");
+        const CategoryInput=document.getElementById("category");
+        const driverNameInput=document.getElementById("driverName");
+        const availabityInput=document.getElementById("avalability");
+        const addFleetBtn=document.getElementById("addFleetBtn");
+        const fleetCards=document.getElementById("fleetCards");
+
+        const CategoryFilter=document.getElementById('categoryFilter');
+        const availabityFilter=document.getElementById("availabilityFilter");
+        const clearFilter=document.getElementById("clearFilter");
+        funtion renederFleetCards(data){
+            fleetcard.innerHTML= '';
+            dat.forEach((fleet,index) => {
+                const card=document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML=`
+                <img src="https://coding-platform.s3.amazonaws.com/dev/lms/tickets/5e80fcb6-3f8e-480c-945b-30a5359eb40e/JNmYjkVr3WOjsrbu.png" alt="Vehicle Image">
+                <p><strong>Reg No:</strong> ${fleet .regNo}</p>
+                <p><strong>Category:</strong>${fleet.category}</p>
+                <p><strong>Driver:</strong>${fleet.driverName}</p>
+                <p><strong>Status:</strong>${fleet.availabity}</p>
+                <button class="update-btn">Update Driver </button>
+                <button class="Availabilty">change availabiity</button>
+                <button class="delet-btn">Delete Vehicle</button>
+                `;
+
+                card.querySelector('.availability-btn').addEventListener('cilck',()=>{
+                    fleet.availabity=fleet.availabity==="Available" ? "UnAvailable" :"Available";
+                    renederFleetCards(fleetData);
+                });
+
+                card.querySelector('.dlete-btn').addEventListener('cilck',()=>{
+                    if(confirm("Are You sure you want to delete this vehicle?")){
+                        fleetData.splice(index,1);   
+                        renederFleetCards(fleetData);
+                    }   
+                });
+
+                fleetCards.appendChild(cards);
+
+            });
+        }
+
+        addFleetBtn.addEventListener('click' , ()=>{
+            const regNo=regNoInput.value.trim();
+            const category=CategoryInput.value;
+            const driverName=driverNameInput.value.trim();
+            const availabiity=availabityInput.value;
+
+            if(!regNo || !category || !driverName || !availabiity){
+                alert("Please Fill the all Feilds");
+                return;
+            }
+            fleetData.push({redNo,category,driverName,availabiity});
+            renederFleetCards(fleetData);
+
+            regNoInput.value='';
+            CategoryInput.value='';
+            driverNameInput.value='';
+            availabityInput.value='';
+            
+        });
+        funtion applyFilter(){
+            let filteredData=fleetdata;
+            const selectCategory=CategoryFilter.value;
+            const selectAvailability=availabityFilter.value;
+
+            if(selectCategor !='All'){
+                filteredData=filteredData.filter(f=>f.category==selectCategory);
+            }
+            
+        }
+
+
+
+       </script>
+
     </body>
 
 </html>

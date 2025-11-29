@@ -23,20 +23,21 @@
             border-radius: 4px;
         }
         .container{
+            
             display: flex;
             padding:20px;
         }
         .sidebar
         {
-            width:250px;
+            width:300px;
             background: whitesmoke;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 0 10px grey;
             margin-right: 20px;
         }
-        .sidebar  input, .sidebar slect ,.sidebar button{
-            width: 250px;
+        .sidebar  input, .sidebar select ,.sidebar button{
+            width: 300px;
             background: whitesmoke;
             border-radius: 5px;
             margin: 5px 0 ;
@@ -206,8 +207,8 @@
             renederFleetCards(filteredData);
         }
 
-        CategoryFilter.addEventListener('change', applyFilter);
-        availabityFilter.addEventListener('change', applyFilter);
+        CategoryFilter.addEventListener('change', applyFilters);
+        availabityFilter.addEventListener('change', applyFilters);
 
         clearFilterBtn.addEventListener('click',()=>{
             CategoryFilter.value="All";
